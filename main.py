@@ -36,6 +36,16 @@ nlp_ner = spacy.load("model-best")
 def app_run(sentence):
   sentence = basic_preprocess(sentence)
   doc = nlp_ner(sentence)
-  spacy.displacy.render(doc, style="ent", options= options, jupyter=True)
+  return (str(doc.ents))
 
-app_run("some nice asian koel songs here")
+
+
+
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return app_run("some nice asian koel songs here")
