@@ -1,6 +1,7 @@
 import spacy
 import re 
 import os
+ON_HEROKU = os.environ.get('ON_HEROKU')
 
 def basic_preprocess(tweet):
   import preprocessor as p
@@ -39,9 +40,9 @@ def hello():
  
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
-    port = int(os.environ.get("PORT", 3000))
-    try:
-      app.run(debug=True, port = port)
-    except Exception as e:
-      port = int(os.environ.get("PORT", 5000))
-      app.run(debug=True, port = port)
+    if ON_HEROKU:
+    # get the heroku port
+      port = int(os.environ.get('PORT', 17995))  # as per OP comments default is 17995
+    else:
+      port = 3000
+    app.run(debug=True, port = port)
