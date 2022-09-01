@@ -1,17 +1,5 @@
 import spacy
-import re
-from zipfile import ZipFile
-
-
-
-colors = {"BIRDNAME": "#8de8e8"}
-options = {"colors": colors} 
-
-
-def extract_model_best_from_archive():
-  file_name = "model-best.zip"
-  with ZipFile(file_name, 'r') as zip:
-    zip.extractall("/content/model-best")
+import re 
 
 def basic_preprocess(tweet):
   import preprocessor as p
@@ -29,8 +17,7 @@ def basic_preprocess(tweet):
   tweet = tweet.strip()
   return tweet
 
-def app_run(sentence):
-  extract_model_best_from_archive()
+def app_run(sentence): 
   nlp_ner = spacy.load("model-best") 
   sentence = basic_preprocess(sentence)
   doc = nlp_ner(sentence)
