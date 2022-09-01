@@ -18,10 +18,13 @@ def basic_preprocess(tweet):
   return tweet
 
 def app_run(sentence): 
-  nlp_ner = spacy.load("model-best") 
-  sentence = basic_preprocess(sentence)
-  doc = nlp_ner(sentence)
-  return (str(doc.ents))
+  try:
+    nlp_ner = spacy.load("model-best") 
+    sentence = basic_preprocess(sentence)
+    doc = nlp_ner(sentence)
+    return (str(doc.ents))
+  except Exception as e:
+    return str(e)
 
 from flask import Flask
 
