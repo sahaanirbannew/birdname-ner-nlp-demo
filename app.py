@@ -39,5 +39,9 @@ def hello():
  
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, port = port)
+    port = int(os.environ.get("PORT", 3000))
+    try:
+      app.run(debug=True, port = port)
+    except Exception as e:
+      port = int(os.environ.get("PORT", 5000))
+      app.run(debug=True, port = port)
