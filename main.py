@@ -29,17 +29,12 @@ def basic_preprocess(tweet):
   tweet = tweet.strip()
   return tweet
 
-extract_model_best_from_archive()
-nlp_ner = spacy.load("model-best") 
-
-
 def app_run(sentence):
+  extract_model_best_from_archive()
+  nlp_ner = spacy.load("model-best") 
   sentence = basic_preprocess(sentence)
   doc = nlp_ner(sentence)
   return (str(doc.ents))
-
-
-
 
 from flask import Flask
 
