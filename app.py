@@ -51,8 +51,9 @@ def send_ner():
   try:
     sent_ = request.args.get('sent')
     response = app_run(sent_)
-  except:
+  except Exception as e:
     response = response + " -- failed at getting argument"
+    response = response + " --- " + str(e)
   return response
   
   
