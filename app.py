@@ -1,7 +1,7 @@
 import spacy
 import re 
 import os
-import request 
+import requests
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
 def acknowledgements():
