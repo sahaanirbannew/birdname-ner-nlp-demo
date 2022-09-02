@@ -2,7 +2,7 @@ import spacy
 import re 
 import os
 import requests
-from flask import Flask, request
+from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
 def acknowledgements():
