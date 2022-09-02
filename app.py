@@ -40,12 +40,13 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
   response_ = app_run("some nice asian koel songs here") +  acknowledgements()
+  response_ = response_ + "    " + str(request.args)
   return response_
  
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+    
     if ON_HEROKU:
-    # get the heroku port
       port = int(os.environ.get('PORT', 17995))  # as per OP comments default is 17995
     else:
       port = 3000
