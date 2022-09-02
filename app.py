@@ -3,6 +3,11 @@ import re
 import os
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
+def acknowledgements():
+  return "- thank you Abhishek Bora (student, College Pune India), Soham Basu (student, M.Sc. Freiburg, Germany"
+
+
+
 def basic_preprocess(tweet):
   import preprocessor as p
   p.set_options(p.OPT.EMOJI, p.OPT.MENTION, p.OPT.URL, p.OPT.SMILEY, p.OPT.NUMBER,p.OPT.HASHTAG)
@@ -35,8 +40,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-  return("Hellow Doham and Anirban")
-  #return app_run("some nice asian koel songs here")
+  #return("Hellow Doham and Anirban")
+  response_ = app_run("some nice asian koel songs here") +  acknowledgements()
+  return response_
  
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
