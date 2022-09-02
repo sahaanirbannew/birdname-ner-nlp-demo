@@ -28,10 +28,14 @@ def basic_preprocess(tweet):
 
 def app_run(sentence): 
   try:
+    response = {}
+    response["bird"]=[]
     nlp_ner = spacy.load("model-best") 
     sentence = basic_preprocess(sentence)
     doc = nlp_ner(sentence)
-    return (str(doc.ents))
+    for ent in doc.ents:
+      response["bird"].append(str(ent))
+    return response
   except Exception as e:
     return str(e)
 
@@ -52,7 +56,7 @@ def hello():
   
 @app.route('/ner')
 def send_ner():
-  response = "It is coming here!"
+  response = ""
   try:
     sent_ = request.args.get('sent')
     response = app_run(sent_)
