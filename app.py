@@ -68,8 +68,8 @@ def send_ner():
   response["messages"] = []     #saves messages to track things.
   
   try:
-    #all_birds, response = load_all_birds_list(response)   #loads list of all birds; around 11,000 of them. 
-    all_birds = ["house crow"]
+    all_birds, response = load_all_birds_list(response)   #loads list of all birds; around 11,000 of them. 
+    #all_birds = ["house crow"]
     response["messages"].append("all birds loaded") 
     response["messages"].append(str(len(all_birds)) + " birds list loaded.")
   except Exception as e: 
