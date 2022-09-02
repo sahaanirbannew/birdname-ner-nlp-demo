@@ -40,7 +40,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
   response_ = app_run("some nice asian koel songs here") +  acknowledgements()
-  response_ = response_ + "    " + str(request.args)
+  #response_ = response_ + "    " + str(request.args)
   return response_
  
 if __name__ == '__main__':
