@@ -1,10 +1,11 @@
 import spacy
 import re 
 import os
+import request 
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
 def acknowledgements():
-  return "- thank you Abhishek Bora (student, College Pune India), Soham Basu (student, M.Sc. Freiburg, Germany"
+  return "- thank you Abhishek Bora (student, Pune Institute of Computer Technology, India), Soham Basu (student, M.Sc. Freiburg, Germany)"
 
 
 
@@ -43,6 +44,14 @@ def hello():
   #response_ = response_ + "    " + str(request.args)
   return response_
  
+  
+@app.route('/ner')
+def send_ner():
+  sent_ = request.args.get('sent')
+  ner = app_run(sent_)
+  return ner
+  
+  
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
     
