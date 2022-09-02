@@ -3,22 +3,22 @@ import re
 import os
 import requests
 import pickle
+import pandas as pd
 from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
-def load_all_birds_list():
-  file = open("bird_list_df",'rb')
-  bird_list_df = pickle.load(file)
-  try: 
-    return bird_list_df
-  except:
-    print("Error: No bird list found.")
-    return 0
-  
-def acknowledgements():
-  return "- thank you Abhishek Bora (student, Pune Institute of Computer Technology, India), Soham Basu (student, M.Sc. Freiburg, Germany)"
-
-
+def load_all_birds_list(response):
+  try:
+    file = open("bird_list_df",'rb')
+    bird_list_df = pickle.load(file)
+    response["messages"].append("bird_list_df loaded") 
+    try: 
+      return bird_list_df, response
+    except Exception as e:
+      response["error"].append(str(e)) 
+  except Exception as e: 
+    response["error"].append(str(e)) 
+ 
 
 def basic_preprocess(tweet):
   import preprocessor as p
@@ -68,7 +68,7 @@ def send_ner():
   response["messages"] = []     #saves messages to track things.
   
   try:
-    all_birds = load_all_birds_list()   #loads list of all birds; around 11,000 of them. 
+    all_birds, response = load_all_birds_list(response)   #loads list of all birds; around 11,000 of them. 
     response["messages"].append("all birds loaded") 
     response["messages"].append(str(len(all_birds)), " birds list loaded.")
   except Exception as e: 
