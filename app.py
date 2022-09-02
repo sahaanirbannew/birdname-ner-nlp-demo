@@ -2,9 +2,19 @@ import spacy
 import re 
 import os
 import requests
+import pickle
 from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
+def load_all_birds_list():
+  file = open("bird_list_df",'rb')
+  bird_list_df = pickle.load(file)
+  try: 
+    return bird_list_df
+  except:
+    print("Error: No bird list found.")
+    return 0
+  
 def acknowledgements():
   return "- thank you Abhishek Bora (student, Pune Institute of Computer Technology, India), Soham Basu (student, M.Sc. Freiburg, Germany)"
 
@@ -20,22 +30,20 @@ def basic_preprocess(tweet):
   tweet = p.clean(tweet)
   tweet = re.sub(r'[^\w\s]', ' ', tweet)
   tweet = re.sub(r' x..', '', tweet)
-  tweet = re.sub(r' +', ' ', tweet) #' +', ' '
-  #tweet = re.sub(r' n. ', '', tweet) 
+  tweet = re.sub(r' +', ' ', tweet) 
   tweet = tweet.replace("x9c","")
   tweet = tweet.strip()
   return tweet
 
-def app_run(sentence): 
+def app_run(sentence):  #fetches bird by custom ner. 
   try:
-    response = {}
-    response["bird"]=[]
+    result = []
     nlp_ner = spacy.load("model-best") 
     sentence = basic_preprocess(sentence)
     doc = nlp_ner(sentence)
     for ent in doc.ents:
-      response["bird"].append(str(ent))
-    return response
+      result.append(str(ent))
+    return result
   except Exception as e:
     return str(e)
 
@@ -44,25 +52,35 @@ from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
-def hello():
+def hello():        #landing page lol.
   try:
     return render_template('index.html')
   except Exception as e:
-    return str(e)
-  #response_ = app_run("some nice asian koel songs here") +  acknowledgements()
-  #response_ = response_ + "    " + str(request.args)
-  #return response_
+    return str(e) 
  
   
-@app.route('/ner')
+@app.route('/ner')        #This is the main program.  :3 
 def send_ner():
-  response = ""
+  response = {}                 #helps us send json files. 
+  response["bird-rule"] = []    #birds found by rule based.
+  response["bird-ner"] = []     #birds found by ner 
+  response["error"] = ""        #logs error texts
+  
   try:
-    sent_ = request.args.get('sent')
-    response = app_run(sent_)
+    all_birds = load_all_birds_list()   #loads list of all birds; around 11,000 of them. 
+  except Exception as e: 
+    response["error"].append(str(e))    #in case the file is not found. 
+  
+  try:
+    sent_ = request.args.get('sent')  #fetches the text via the argument. 
+    
+    for bird in all_birds:            #no chances of error here. 
+      if sent_.find(bird) >-1:
+        response["bird-rule"].append(bird)  #if bird is found by rule matching, it is appended.
+    
+    response["bird-ner"] = app_run(sent_) #if bird is found by ner, it is appended. 
   except Exception as e:
-    response = response + " -- failed at getting argument"
-    response = response + " --- " + str(e)
+    response["error"].append(str(e)) 
   return response
   
   
