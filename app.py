@@ -37,10 +37,14 @@ from flask import Flask
 
 app = Flask(__name__)
 
+@app.route('/str', methods=['GET'])
+def search():
+  args = request.args
+  args.get("str"))
+  return app_run(str)
 
 @app.route('/')
 def hello():
-  #return("Hellow Doham and Anirban")
   response_ = app_run("some nice asian koel songs here") +  acknowledgements()
   return response_
  
