@@ -41,9 +41,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-  response_ = app_run("some nice asian koel songs here") +  acknowledgements()
+  try:
+    return render_template('index.html')
+  except Exception as e:
+    return str(e)
+  #response_ = app_run("some nice asian koel songs here") +  acknowledgements()
   #response_ = response_ + "    " + str(request.args)
-  return response_
+  #return response_
  
   
 @app.route('/ner')
