@@ -64,15 +64,22 @@ def send_ner():
   response = {}                 #helps us send json files. 
   response["bird-rule"] = []    #birds found by rule based.
   response["bird-ner"] = []     #birds found by ner 
-  response["error"] = ""        #logs error texts
+  response["error"] = []        #logs error texts
+  response["messages"] = []     #saves messages to track things.
   
   try:
     all_birds = load_all_birds_list()   #loads list of all birds; around 11,000 of them. 
+    response["messages"].append("all birds loaded") 
+    response["messages"].append(str(len(all_birds)), " birds list loaded.")
   except Exception as e: 
     response["error"].append(str(e))    #in case the file is not found. 
   
   try:
     sent_ = request.args.get('sent')  #fetches the text via the argument. 
+    response["messages"].append("user input recorded.")
+      
+    sent_ = basic_preprocess(sent_)   #preprocessing pipeline.
+    response["messages"].append("user input processed.")
     
     for bird in all_birds:            #no chances of error here. 
       if sent_.find(bird) >-1:
