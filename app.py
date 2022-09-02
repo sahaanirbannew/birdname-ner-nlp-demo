@@ -11,9 +11,10 @@ def load_all_birds_list(response):
   try:
     file = open("bird_list_df",'rb')
     bird_list_df = pickle.load(file)
+    all_birds = bird_list_df["bird_name"].tolist()
     response["messages"].append("bird_list_df loaded") 
     try: 
-      return bird_list_df, response
+      return all_birds, response
     except Exception as e:
       response["error"].append(str(e)) 
   except Exception as e: 
