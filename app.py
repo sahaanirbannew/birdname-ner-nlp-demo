@@ -47,9 +47,13 @@ def hello():
   
 @app.route('/ner')
 def send_ner():
-  sent_ = request.args.get('sent')
-  ner = app_run(sent_)
-  return ner
+  response = "It is coming here!"
+  try:
+    sent_ = request.args.get('sent')
+    response = app_run(sent_)
+  except:
+    response = response + " -- failed at getting argument"
+  return response
   
   
 if __name__ == '__main__':
