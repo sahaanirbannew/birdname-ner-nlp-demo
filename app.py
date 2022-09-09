@@ -1,6 +1,7 @@
 import spacy
 import re 
 import os
+import sys
 import requests
 import pickle
 import pandas as pd
@@ -21,7 +22,7 @@ def load_all_birds_list(response):
     response["error"].append(str(e)) 
  
 def get_image_links(): 
-  root = root_path(self)
+  root = root_path()
   path = "./templates/images"
   imglinks_ = os.listdir(path) 
   imglinks = []
@@ -45,7 +46,7 @@ def basic_preprocess(tweet):
   tweet = tweet.strip()
   return tweet
 
-def root_path(self):
+def root_path():
     # Infer the root path from the run file in the project root (e.g. manage.py)
     fn = getattr(sys.modules['__main__'], '__file__')
     root_path = os.path.abspath(os.path.dirname(fn))
