@@ -23,11 +23,12 @@ def load_all_birds_list(response):
  
 def get_image_links(): 
   root = root_path()
+  
   path = "./templates/images"
   imglinks_ = os.listdir(path) 
   imglinks = []
   for filename in imglinks_: 
-    imglinks.append(root+path+"/"+filename)
+    imglinks.append(os.path.join(app.instance_path, '/templates/images/', filename))
   
   return imglinks 
 
