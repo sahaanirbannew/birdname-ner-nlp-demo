@@ -20,12 +20,13 @@ def load_all_birds_list(response):
   except Exception as e: 
     response["error"].append(str(e)) 
  
-def get_image_links():
+def get_image_links(): 
+  root = root_path(self)
   path = "./templates/images"
   imglinks_ = os.listdir(path) 
   imglinks = []
   for filename in imglinks_: 
-    imglinks.append(path+"/"+filename)
+    imglinks.append(root+path+"/"+filename)
   
   return imglinks 
 
@@ -44,6 +45,12 @@ def basic_preprocess(tweet):
   tweet = tweet.strip()
   return tweet
 
+def root_path(self):
+    # Infer the root path from the run file in the project root (e.g. manage.py)
+    fn = getattr(sys.modules['__main__'], '__file__')
+    root_path = os.path.abspath(os.path.dirname(fn))
+    return root_path
+  
 def app_run(sentence):  #fetches bird by custom ner. 
   try:
     result = []
