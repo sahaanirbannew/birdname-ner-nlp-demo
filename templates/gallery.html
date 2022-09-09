@@ -1,5 +1,5 @@
 <html>
   {% for link in links: %}
-              <img src="{{link}}" width="256" alt="bird">
+              <img src="{{url_for('static', filename=link)}}" width="256" alt="bird">
   {% endfor %}
 </html>
