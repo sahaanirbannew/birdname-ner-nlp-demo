@@ -22,7 +22,11 @@ def load_all_birds_list(response):
  
 def get_image_links():
   path = "./templates/images"
-  imglinks = os.listdir(path) 
+  imglinks_ = os.listdir(path) 
+  imglinks = []
+  for filename in imglinks_: 
+    imglinks.append(path+"/"+filename)
+  
   return imglinks 
 
 def basic_preprocess(tweet):
