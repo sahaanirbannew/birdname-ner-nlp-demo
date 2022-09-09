@@ -28,7 +28,8 @@ def get_image_links():
   imglinks_ = os.listdir(path) 
   imglinks = []
   for filename in imglinks_: 
-    imglinks.append(os.path.join(app.instance_path, '/templates/images/', filename))
+    #imglinks.append(os.path.join(app.instance_path, '/templates/images/', filename))
+    imglinks.append(os.path.join(filename))
   
   return imglinks 
 
