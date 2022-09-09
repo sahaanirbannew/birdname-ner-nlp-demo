@@ -62,7 +62,27 @@ def hello():        #landing page lol.
 @app.route('/gallery')
 def gall():
   try:
-    return render_template('gallery.html')
+    imglinks= ['http://pbs.twimg.com/media/FbLq_JsagAI5Mt1.jpg',
+ 'http://pbs.twimg.com/media/FbLjTiNaIAA5Sp3.jpg',
+ 'http://pbs.twimg.com/media/FbLiCpqaAAsRPTW.jpg',
+ 'http://pbs.twimg.com/media/FbLaq9yUYAAKvGK.jpg',
+ 'http://pbs.twimg.com/media/FbLaZFDUUAE68eh.jpg',
+ 'http://pbs.twimg.com/media/FbLZaOaaIAIU8FZ.jpg',
+ 'http://pbs.twimg.com/media/FbLKAwPUUAQr9Iu.jpg',
+ 'http://pbs.twimg.com/media/FbLJzY0VEAMGbkf.jpg',
+ 'http://pbs.twimg.com/media/FbLJZjkVEAAyfEr.jpg',
+ 'http://pbs.twimg.com/media/FbK4N_tacAAG-_0.jpg',
+ 'http://pbs.twimg.com/media/FbK00-XVEAARo-G.jpg',
+ 'http://pbs.twimg.com/media/FbKwv0uVEAAU0QS.jpg',
+ 'http://pbs.twimg.com/media/FbKrF_DUYAQkxNZ.jpg',
+ 'http://pbs.twimg.com/media/FbKqNX_aUAMqP4l.jpg',
+ 'http://pbs.twimg.com/media/FbKZAkhUcAMvU_F.jpg',
+ 'http://pbs.twimg.com/media/FbKADSzUEAEkcTc.jpg',
+ 'http://pbs.twimg.com/media/FbJ6nRTUsAAM9F4.jpg',
+ 'http://pbs.twimg.com/media/FbJz81QVUAQ-qRj.jpg',
+ 'http://pbs.twimg.com/media/FbJ1kLhVEAYb43E.jpg',
+ 'http://pbs.twimg.com/media/FbJss-KUEAAtLNR.jpg'] 
+    return render_template('gallery.html', links= imglinks)
   except Exception as e:
     return str(e)
   
