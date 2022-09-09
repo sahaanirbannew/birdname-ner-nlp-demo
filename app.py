@@ -21,7 +21,7 @@ def load_all_birds_list(response):
     response["error"].append(str(e)) 
  
 def get_image_links():
-  path = "/templates/images"
+  path = "./templates/images"
   imglinks = os.listdir(path) 
   return imglinks 
 
