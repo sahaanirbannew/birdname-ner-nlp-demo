@@ -87,7 +87,7 @@ def gall():
 @app.route('/birdname')
 def dothis():
   sent_ = request.args.get('sent')
-  return render_template('single_bird.html')
+  return render_template('single_bird.html', birdname=sent_)
   
   
 @app.route('/ner')        #This is the main program.  :3 
