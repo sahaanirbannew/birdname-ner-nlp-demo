@@ -58,7 +58,14 @@ def hello():        #landing page lol.
     return render_template('index.html')
   except Exception as e:
     return str(e) 
- 
+
+@app.route('/gallery')
+def gall():
+  try:
+    return render_template('gallery.html')
+  except Exception as e:
+    return str(e)
+  
   
 @app.route('/ner')        #This is the main program.  :3 
 def send_ner():
