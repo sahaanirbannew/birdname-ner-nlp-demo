@@ -8,6 +8,17 @@ import pandas as pd
 from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
 
+spelling_corrections = {}
+spelling_corrections["grey"] = "gray" 
+spelling_corrections["pegion"] = "pigeon" 
+spelling_corrections["brested"] = "breasted" 
+spelling_corrections["serpant"] = "serpent" 
+spelling_corrections["avedavat"] = "avadavat" 
+spelling_corrections["open billed stork"] = "asian openbill" 
+spelling_corrections["secretary bird"] = "Secretarybird" 
+spelling_corrections["dollar bird"] = "dollarbird"
+
+
 def load_all_birds_list(response):
   try:
     file = open("bird_list_df",'rb')
@@ -20,6 +31,24 @@ def load_all_birds_list(response):
       response["error"].append(str(e)) 
   except Exception as e: 
     response["error"].append(str(e)) 
+
+def get_eBird_commonNames_data():
+  file = open("bird_dict_comName",'rb')
+  try:
+    eBird_commonNames_data = pickle.load(file)
+    return eBird_commonNames_data 
+  except Exception as e:
+    print(str(e))
+    return 0
+  
+def return_eBird_list(spelling_corrections):
+  eBird_commonNames = get_eBird_commonNames_data("bird_dict_comName")
+  eBird_commonNames_list = []
+  for eBird in eBird_commonNames:
+    if eBird_commonNames[eBird] != "ou":
+      eBird_commonNames[eBird] = basic_preprocess(eBird_commonNames[eBird],spelling_corrections)
+      eBird_commonNames_list.append(eBird_commonNames[eBird].strip())
+  return eBird_commonNames_list 
  
 def get_image_links(): 
   root = root_path()
@@ -33,7 +62,7 @@ def get_image_links():
   
   return imglinks 
 
-def basic_preprocess(tweet):
+def basic_preprocess(tweet, spelling_corrections):
   import preprocessor as p
   p.set_options(p.OPT.EMOJI, p.OPT.MENTION, p.OPT.URL, p.OPT.SMILEY, p.OPT.NUMBER,p.OPT.HASHTAG)
   tweet = tweet.lower()
