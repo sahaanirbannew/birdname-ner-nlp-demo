@@ -83,11 +83,11 @@ def root_path():
     root_path = os.path.abspath(os.path.dirname(fn))
     return root_path
   
-def app_run(sentence):  #fetches bird by custom ner. 
+def app_run(sentence,spelling_corrections):  #fetches bird by custom ner. 
   try:
     result = []
     nlp_ner = spacy.load("model-best") 
-    sentence = basic_preprocess(sentence)
+    sentence = basic_preprocess(sentence,spelling_corrections)
     doc = nlp_ner(sentence)
     for ent in doc.ents:
       result.append(str(ent))
@@ -144,7 +144,7 @@ def send_ner():
     sent_ = request.args.get('sent')  #fetches the text via the argument. 
     response["messages"].append("user input recorded.")
       
-    sent_ = basic_preprocess(sent_)   #preprocessing pipeline.
+    sent_ = basic_preprocess(sent_, spelling_corrections)   #preprocessing pipeline.
     response["messages"].append("user input processed.")
     
     for bird in all_birds:            #no chances of error here. 
@@ -155,7 +155,8 @@ def send_ner():
       if sent_.find(bird_) >-1:
         response["bird-ebird"].append(bird_) #from the ebird list of birds.
        
-    response["bird-ner"] = app_run(sent_) #if bird is found by ner, it is appended. 
+    response["bird-ner"] = app_run(sent_,spelling_corrections) #if bird is found by ner, it is appended. 
+    #why am i again preprocessing it inside app_run? sent_ is already processed. 
   except Exception as e:
     response["error"].append(str(e)) 
   return response
