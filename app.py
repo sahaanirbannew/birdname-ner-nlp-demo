@@ -76,7 +76,9 @@ def basic_preprocess(tweet, spelling_corrections):
   tweet = tweet.replace("x9c","")
   tweet = tweet.strip()
   for key in spelling_corrections: 
-    if tweet.find(key)>-1: tweet.replace(key,spelling_corrections[key])
+    if tweet.find(key)>-1: 
+      response["messages"].append(key + " found.")
+      tweet.replace(key,spelling_corrections[key])
   return tweet
 
 def root_path():
