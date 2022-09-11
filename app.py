@@ -122,8 +122,9 @@ def dothis():
 @app.route('/ner')        #This is the main program.  :3 
 def send_ner():
   response = {}                 #helps us send json files. 
-  response["bird-rule"] = []    #birds found by rule based.
+  response["bird-wiki"] = []    #birds found by rule based - wikipedia list.
   response["bird-ner"] = []     #birds found by ner 
+  response["bird-ebird"] = []   #birds found by rule based - ebird list.
   response["error"] = []        #logs error texts
   response["messages"] = []     #saves messages to track things.
   
@@ -132,7 +133,12 @@ def send_ner():
     response["messages"].append("all birds loaded") 
     response["messages"].append(str(len(all_birds)) + " birds list loaded.")
   except Exception as e: 
-    response["error"].append(str(e))    #in case the file is not found. 
+    response["error"].append(str(e))    #in case the file is not found.  
+    
+  try: 
+    ebird_list = return_eBird_list(spelling_corrections)
+  except Exception as e:
+    response["error"].append(str(e))    #in case the file is not found.  
   
   try:
     sent_ = request.args.get('sent')  #fetches the text via the argument. 
@@ -143,8 +149,12 @@ def send_ner():
     
     for bird in all_birds:            #no chances of error here. 
       if sent_.find(bird) >-1:
-        response["bird-rule"].append(bird)  #if bird is found by rule matching, it is appended.
+        response["bird-wiki"].append(bird)  #if bird is found by rule matching from wikipedia link, it is appended.
     
+    for bird_ in ebird_list:
+      if sent_.find(bird_) >-1:
+        response["bird-ebird"].append(bird_) #from the ebird list of birds.
+       
     response["bird-ner"] = app_run(sent_) #if bird is found by ner, it is appended. 
   except Exception as e:
     response["error"].append(str(e)) 
