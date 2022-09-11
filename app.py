@@ -77,7 +77,6 @@ def basic_preprocess(tweet, spelling_corrections):
   tweet = tweet.strip()
   for key in spelling_corrections: 
     if tweet.find(key)>-1: 
-      response["messages"].append(key + " found.")
       tweet.replace(key,spelling_corrections[key])
   return tweet
 
