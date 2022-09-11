@@ -64,7 +64,7 @@ def get_image_links():
 
 def basic_preprocess(tweet, spelling_corrections):
   import preprocessor as p
-  p.set_options(p.OPT.EMOJI, p.OPT.MENTION, p.OPT.URL, p.OPT.SMILEY, p.OPT.NUMBER,p.OPT.HASHTAG)
+  p.set_options(p.OPT.EMOJI, p.OPT.MENTION, p.OPT.URL, p.OPT.SMILEY, p.OPT.NUMBER)
   tweet = tweet.lower()
   tweet = tweet.replace("\n"," ")  
   tweet = tweet.replace("\\n"," ")
@@ -75,6 +75,8 @@ def basic_preprocess(tweet, spelling_corrections):
   tweet = re.sub(r' +', ' ', tweet) 
   tweet = tweet.replace("x9c","")
   tweet = tweet.strip()
+  for key in spelling_corrections: 
+    if tweet.find(key)>-1: tweet.replace(key,spelling_corrections[key])
   return tweet
 
 def root_path():
