@@ -116,9 +116,9 @@ def gall():
   except Exception as e:
     return str(e)
 
-@app.route('/birdname')
+@app.route('/single')
 def dothis():
-  sent_ = request.args.get('sent')
+  sent_ = request.args.get('birdname')
   return render_template('single_bird.html', birdname=sent_)
   
   
