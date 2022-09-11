@@ -42,7 +42,7 @@ def get_eBird_commonNames_data():
     return 0
   
 def return_eBird_list(spelling_corrections):
-  eBird_commonNames = get_eBird_commonNames_data("bird_dict_comName")
+  eBird_commonNames = get_eBird_commonNames_data()
   eBird_commonNames_list = []
   for eBird in eBird_commonNames:
     if eBird_commonNames[eBird] != "ou":
