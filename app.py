@@ -68,12 +68,12 @@ def basic_preprocess(tweet, spelling_corrections):
   tweet = tweet.lower()
   tweet = tweet.replace("\n"," ")  
   tweet = tweet.replace("\\n"," ")
+  if tweet[:2] == "b'": tweet = tweet[1:] 
   tweet = tweet.replace("'","") 
   tweet = p.clean(tweet)
   tweet = re.sub(r'[^\w\s]', ' ', tweet)
   tweet = re.sub(r' x..', '', tweet)
-  tweet = re.sub(r' +', ' ', tweet) 
-  tweet = tweet.replace("x9c","")
+  tweet = re.sub(r' +', ' ', tweet)  
   tweet = tweet.strip()
   for key in spelling_corrections: 
     if tweet.find(key)>-1: 
