@@ -5,3 +5,5 @@ flask
 gunicorn
 requests 
 pandas
+BeautifulSoup
+googlesearch
