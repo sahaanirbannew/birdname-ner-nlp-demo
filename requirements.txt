@@ -6,5 +6,5 @@ flask
 gunicorn
 requests 
 pandas
-bs4
+BeautifulSoup4
 googlesearch
