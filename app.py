@@ -185,7 +185,7 @@ def dothis():
     ebird_bird_description = mat[0].text
   except Exception as e: 
     ebird_bird_description = str(e)
-  return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description, ebird_link= eBird_link,botw_link=botw_link )
+  return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description, ebird_link= eBird_link,botw_link=botw_link, imglink=imglink )
   
   
 @app.route('/ner')        #This is the main program.  :3 
