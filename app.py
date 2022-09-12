@@ -12,7 +12,7 @@ import urllib.request
 import html.parser 
 from requests.exceptions import HTTPError
 from socket import error as SocketError
-#from http.cookiejar import CookieJar
+from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
 
 
