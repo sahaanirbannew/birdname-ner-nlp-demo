@@ -176,15 +176,15 @@ def dothis():
     speciesCode, eBird_link = search_by_commonName_google(birdname)
    
   botw_link ="https://birdsoftheworld.org/bow/species/"+speciesCode+"/cur/introduction" 
-  #ebird_api_key = "68c6i1pl67vt"
   ##so now we have eBird link and birdoftheworld link
+  
   try:
     soup = BeautifulSoup(return_html_code(eBird_link), 'html.parser')
     mat = soup.find_all("p", {"class": "u-stack-sm"})
     ebird_bird_description = mat[0].text
   except Exception as e: 
     ebird_bird_description = str(e)
-  return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description)
+  return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description, ebird_link= eBird_link,botw_link=botw_link )
   
   
 @app.route('/ner')        #This is the main program.  :3 
