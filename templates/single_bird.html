@@ -1,10 +1,8 @@
-{{ def get_details(birdname):
-return "This is bird details"
-}}
-
 <html>
   <h1> {{birdname}}</h1>
   
-  <p> {{get_details(birdname)}} </p>
+  <p> {{try: get_details(birdname)
+    except:
+    return "Well, sadness"}} </p>
   
 </html>
