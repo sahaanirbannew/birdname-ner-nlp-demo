@@ -37,14 +37,6 @@ spelling_corrections["secretary bird"] = "Secretarybird"
 spelling_corrections["dollar bird"] = "dollarbird"
 
 
-def get_all_image_links(complete_dataset_dict):
-  bird_for_gallery = {} 
-  for bird in complete_dataset_dict: 
-    bird_for_gallery[bird] = {} 
-    bird_for_gallery[bird]['name'] = bird 
-    bird_for_gallery[bird]['image'] = complete_dataset_dict[bird]['entries'][0]['media_url'] 
-  return bird_for_gallery
-
 def return_html_code(url):
   opener = build_opener(HTTPCookieProcessor())
   response = opener.open(url)
@@ -144,6 +136,11 @@ def search_by_commonName_google(commonName):
       speciesCode = eBird_link.split("/")[len(eBird_link.split("/"))-1]
       return speciesCode, eBird_link
 
+def get_all_image_links(complete_dataset_dict):
+  bird_for_gallery = {} 
+  for key in complete_dataset_dict: 
+    bird_for_gallery[key] = complete_dataset_dict[key]["entries"][0]["media_url"]
+  return bird_for_gallery
 
 
 
@@ -170,9 +167,9 @@ def hello():        #landing page lol.
 def gall():
   dataset_dict_path = open("dataset_dictionary",'rb') 
   dataset_dict = pickle.load(file)
-  bird_image = get_all_image_links(complete_dataset_dict)
+  gallery_images = get_all_image_links(complete_dataset_dict)
   try:
-    return render_template('gallery.html', links= bird_image)
+    return render_template('gallery.html', links= get_all_image_links)
   except Exception as e:
     return str(e)
 
