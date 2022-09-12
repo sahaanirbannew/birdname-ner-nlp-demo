@@ -40,7 +40,7 @@ spelling_corrections["dollar bird"] = "dollarbird"
 
 def return_html_code(url):
   opener = build_opener(HTTPCookieProcessor())
-  response = opener.open(eBird_link)
+  response = opener.open(url)
   html = response.read() 
   return html
 
