@@ -7,6 +7,20 @@ import pickle
 import pandas as pd
 from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
+from googlesearch import search 
+import urllib.request
+import html.parser 
+from requests.exceptions import HTTPError
+from socket import error as SocketError
+from http.cookiejar import CookieJar
+from urllib.request import build_opener, HTTPCookieProcessor
+
+
+
+
+
+
+
 
 spelling_corrections = {}
 spelling_corrections["grey"] = "gray" 
@@ -18,6 +32,13 @@ spelling_corrections["open billed stork"] = "asian openbill"
 spelling_corrections["secretary bird"] = "Secretarybird" 
 spelling_corrections["dollar bird"] = "dollarbird"
 
+
+
+def return_html_code(url):
+  opener = build_opener(HTTPCookieProcessor())
+  response = opener.open(eBird_link)
+  html = response.read() 
+  return html
 
 def load_all_birds_list(response):
   try:
@@ -48,7 +69,7 @@ def return_eBird_list(spelling_corrections):
     if eBird_commonNames[eBird] != "ou":
       eBird_commonNames[eBird] = basic_preprocess(eBird_commonNames[eBird],spelling_corrections)
       eBird_commonNames_list.append(eBird_commonNames[eBird].strip())
-  return eBird_commonNames_list 
+  return eBird_commonNames_list
  
 def get_image_links(): 
   root = root_path()
@@ -98,8 +119,33 @@ def app_run(sentence,spelling_corrections):  #fetches bird by custom ner.
   except Exception as e:
     return str(e)
 
-from flask import Flask
+def search_speciesCode_by_commName(commName,bird_dict_comName):
+  for key in bird_dict_comName:
+    if bird_dict_comName[key] == commName.lower():
+      return key
+  return ""
 
+def search_by_commonName_google(commonName): 
+  results = search(commonName, tld="com", num=3, stop=3, pause=2) 
+  for result in results: 
+    if str(result).find("ebird.org") > -1:
+      eBird_link = result
+      speciesCode = eBird_link.split("/")[len(eBird_link.split("/"))-1]
+      return speciesCode, eBird_link
+
+
+
+
+
+
+
+
+
+
+
+
+
+from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
@@ -118,8 +164,21 @@ def gall():
 
 @app.route('/single')
 def dothis():
-  sent_ = request.args.get('birdname')
-  return render_template('single_bird.html', birdname=sent_)
+  birdname = request.args.get('birdname')
+  bird_dict_comName = get_eBird_commonNames_data()
+  speciesCode = search_speciesCode_by_commName(birdname,bird_dict_comName)
+  eBird_link = "https://ebird.org/species/"+speciesCode
+  if len(speciesCode)<2:  
+    speciesCode, eBird_link = search_by_commonName_google(birdname)
+   
+  botw_link ="https://birdsoftheworld.org/bow/species/"+speciesCode+"/cur/introduction" 
+  ebird_api_key = "68c6i1pl67vt"
+  #so now we have eBird link and birdoftheworld link
+  soup = BeautifulSoup(return_html_code(eBird_link), 'html.parser')
+  mat = soup.find_all("p", {"class": "u-stack-sm"})
+  ebird_bird_description = mat[0].text
+
+  return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description)
   
   
 @app.route('/ner')        #This is the main program.  :3 
