@@ -77,7 +77,7 @@ def basic_preprocess(tweet, spelling_corrections):
   tweet = tweet.strip()
   for key in spelling_corrections: 
     if tweet.find(key)>-1: 
-      tweet.replace(key,spelling_corrections[key])
+      tweet = tweet.replace(key,spelling_corrections[key])
   return tweet
 
 def root_path():
