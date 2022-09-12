@@ -174,10 +174,10 @@ def dothis():
   botw_link ="https://birdsoftheworld.org/bow/species/"+speciesCode+"/cur/introduction" 
   #ebird_api_key = "68c6i1pl67vt"
   ##so now we have eBird link and birdoftheworld link
-  #soup = BeautifulSoup(return_html_code(eBird_link), 'html.parser')
-  #mat = soup.find_all("p", {"class": "u-stack-sm"})
-  #ebird_bird_description = mat[0].text
-  ebird_bird_description = "May be here is an error due to a package."
+  soup = BeautifulSoup(return_html_code(eBird_link), 'html.parser')
+  mat = soup.find_all("p", {"class": "u-stack-sm"})
+  ebird_bird_description = mat[0].text
+  #ebird_bird_description = "May be here is an error due to a package."
   return render_template('single_bird.html', birdname=birdname, ebird_desc=ebird_bird_description)
   
   
