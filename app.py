@@ -14,7 +14,10 @@ from requests.exceptions import HTTPError
 from socket import error as SocketError
 from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
-import BeautifulSoup
+try:
+  from BeautifulSoup4 import BeautifulSoup
+except:
+  print("issue here")
 
 
 
