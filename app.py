@@ -9,7 +9,7 @@ from flask import Flask, request, render_template
 ON_HEROKU = os.environ.get('ON_HEROKU')
 #from googlesearch import search 
 import urllib.request
-#import html.parser 
+import html.parser 
 #from requests.exceptions import HTTPError
 #from socket import error as SocketError
 #from http.cookiejar import CookieJar
