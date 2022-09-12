@@ -6,3 +6,4 @@ gunicorn
 requests 
 pandas 
 google-search-results
+beautifulsoup4
