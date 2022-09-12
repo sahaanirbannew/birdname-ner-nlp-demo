@@ -161,6 +161,8 @@ def hello():        #landing page lol.
 
 @app.route('/gallery')
 def gall():
+  dataset_dict_path = open("dataset_dictionary",'rb') 
+  dataset_dict = pickle.load(file)
   try:
     return render_template('gallery.html', links= get_image_links())
   except Exception as e:
