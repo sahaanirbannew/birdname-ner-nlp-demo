@@ -11,7 +11,7 @@ ON_HEROKU = os.environ.get('ON_HEROKU')
 import urllib.request
 import html.parser 
 from requests.exceptions import HTTPError
-#from socket import error as SocketError
+from socket import error as SocketError
 #from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
 
