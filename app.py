@@ -15,7 +15,7 @@ from socket import error as SocketError
 from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
 try:
-  from BeautifulSoup4 import BeautifulSoup
+  from bs4 import BeautifulSoup
 except:
   print("issue here")
 
