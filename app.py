@@ -169,6 +169,7 @@ def gall():
 @app.route('/single')
 def dothis():
   birdname = request.args.get('birdname')
+  imglink = request.args.get('img')
   bird_dict_comName = get_eBird_commonNames_data()
   speciesCode = search_speciesCode_by_commName(birdname,bird_dict_comName)
   eBird_link = "https://ebird.org/species/"+speciesCode
