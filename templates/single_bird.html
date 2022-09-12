@@ -21,7 +21,10 @@
   <div class="upper-body">
   <div class="ebird-text">
   <b>eBird description</b>
-  {{ebird_desc}}</div>
+  {{ebird_desc}}
+    {{imglink}}
+    {{url_for('static', filename=imglink)}}
+    </div>
   <div class="upper-body-image">
     <img src="{{url_for('static', filename=imglink)}}">
   </div>
