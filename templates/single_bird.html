@@ -4,6 +4,13 @@
       background-color: linen;
       width:400px;
     }
+    .upper-body {
+      background-color: linen;
+      width:700px;
+    }
+    .upper-body-image {
+      width:290px;
+    }
 </style>
   
   <center>
@@ -11,9 +18,14 @@
   
   <p>Here we can print bird details from eBird, allabout birds, Wikipedia, photographs taken by other members, etc.</p>
   
+  <div class="upper-body">
   <div class="ebird-text">
   <b>eBird description</b>
   {{ebird_desc}}</div>
+  <div class="upper-body-image">
+    <img src="{{imglink}}">
+  </div>
+  </div>
     
   <a href={{eBird_link}}>eBird link.</a><br>
   <a href={{botw_link}}>Birds of the World link.</a> 
