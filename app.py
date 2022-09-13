@@ -47,11 +47,12 @@ def download_image(img_link, response):
       with open(file_name,'wb') as f:
           shutil.copyfileobj(res.raw, f)  
       crop_resize_image(file_name)
-      return file_name    
-    else: return "" 
+      return file_name, response  
+    else: return "", response
   except Exception as e:
     response['error'].append(str(e))
     print(str(e), img_link)
+  return "", response
 
 def return_html_code(url):
   opener = build_opener(HTTPCookieProcessor())
@@ -153,7 +154,7 @@ def get_all_image_links(complete_dataset_dict, response):
         break
     if type(download_link) == str:  
       try:
-        file_name = download_image(download_link,response) 
+        file_name,response = download_image(download_link,response) 
       except Exception as e: 
         response["error"].append(key+" :Download faild"+str(e))
       bird_for_gallery[key] = file_name
