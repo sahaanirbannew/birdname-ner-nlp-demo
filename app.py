@@ -42,13 +42,16 @@ def download_image(img_link, response):
     file_name=img_link.split("/")[len(img_link.split("/"))-1]
     ##file_name = url_for('static', filename=file_name)
     ##file_name = "/static/"+file_name
-    file_name = os.path.join(app.root_path, "static", file_name)
+    #file_name = os.path.join(app.root_path, "static", file_name) 
+    file_name = "/static/"+file_name
     res = requests.get(img_link, stream = True)
     if res.status_code == 200: 
+      
       with open(file_name,'wb') as f:
           shutil.copyfileobj(res.raw, f)  
       crop_resize_image(file_name)
       return file_name, response  
+    
     else: return "", response
   except Exception as e:
     response['error'].append(str(e))
@@ -206,7 +209,10 @@ def gall():
   #  return render_template('gallery.html', links= gallery_images)
   #except Exception as e:
   #  response['error'].appen("Render Template failed. "+str(e))
-  #response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
+  try:
+    response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
+  except Exception as e: 
+    response['error'].append(str(e)) 
   return response
 
 @app.route('/single')
