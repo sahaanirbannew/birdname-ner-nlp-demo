@@ -180,6 +180,10 @@ def gall():
   response={}
   response['message'] = []
   response['error'] = []
+  
+  try:
+    dataset_dict_path = open("dataset_dictionary",'rb') 
+    dataset_dict = pickle.load(dataset_dict_path)
   #try: 
   #  dataset_dict_path = open("dataset_dictionary",'rb') 
   #  dataset_dict = pickle.load(file)
