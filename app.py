@@ -188,13 +188,28 @@ def hello():        #landing page lol.
 
 @app.route('/gallery')
 def gall():
-  dataset_dict_path = open("dataset_dictionary",'rb') 
-  dataset_dict = pickle.load(file)
-  gallery_images = get_all_image_links(dataset_dict)
+  response={}
+  response['message'] = []
+  response['error'] = []
+  try: 
+    dataset_dict_path = open("dataset_dictionary",'rb') 
+    dataset_dict = pickle.load(file)
+    response['message'].append("Dataset Dictionary loaded.") 
+  except Exception as e: 
+    response['error'].appen("Dataset Dictionary not loaded. "+str(e))
+  
+  try: 
+    gallery_images = get_all_image_links(dataset_dict)
+    response['message'].append("Gallery images loaded loaded.") 
+  except: 
+    response['error'].appen("Gallery creation: "+str(e))
+  
   try:
     return render_template('gallery.html', links= get_all_image_links)
   except Exception as e:
-    return str(e)
+    response['error'].appen("Render Template failed. "+str(e))
+  
+  return response
 
 @app.route('/single')
 def dothis():
