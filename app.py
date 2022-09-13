@@ -37,10 +37,11 @@ spelling_corrections["open billed stork"] = "asian openbill"
 spelling_corrections["secretary bird"] = "Secretarybird" 
 spelling_corrections["dollar bird"] = "dollarbird"
 
-def download_image(img_link):
+def download_image(img_link, response):
   try:
     file_name=img_link.split("/")[len(img_link.split("/"))-1]
-    file_name = url_for('static', filename=file_name)
+    ##file_name = url_for('static', filename=file_name)
+    file_name = "/static/"+file_name
     res = requests.get(img_link, stream = True)
     if res.status_code == 200: 
       with open(file_name,'wb') as f:
@@ -49,6 +50,7 @@ def download_image(img_link):
       return file_name    
     else: return "" 
   except Exception as e:
+    response['error'].append(str(e))
     print(str(e), img_link)
 
 def return_html_code(url):
@@ -150,9 +152,8 @@ def get_all_image_links(complete_dataset_dict, response):
       if count == len(complete_dataset_dict[key]["entries"]):
         break
     if type(download_link) == str:  
-      response["message"].append(key+" "+download_link)
       try:
-        file_name = download_image(download_link) 
+        file_name = download_image(download_link,response) 
       except Exception as e: 
         response["error"].append(key+" :Download faild"+str(e))
       bird_for_gallery[key] = file_name
