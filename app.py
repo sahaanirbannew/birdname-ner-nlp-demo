@@ -49,6 +49,7 @@ def download_image(img_link, response):
       
       with open(file_name,'wb') as f:
           shutil.copyfileobj(res.raw, f)  
+      f.close() 
       crop_resize_image(file_name)
       return file_name, response  
     
@@ -209,8 +210,15 @@ def gall():
   #  return render_template('gallery.html', links= gallery_images)
   #except Exception as e:
   #  response['error'].appen("Render Template failed. "+str(e))
+ 
   try:
-    response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
+    target_file = "/static/temp.jpg"
+    download_link = "https://pbs.twimg.com/media/FcTKvbdagAQ4sxk.jpg"
+    res = requests.get(download_link, stream = True)
+    if res.status_code == 200:  
+      with open(target_file,'wb') as f:
+          shutil.copyfileobj(res.raw, f) 
+      f.close()
   except Exception as e: 
     response['error'].append(str(e)) 
   return response
