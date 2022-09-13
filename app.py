@@ -186,24 +186,19 @@ def gall():
     dataset_dict = pickle.load(dataset_dict_path)
     dataset_dict_path.close()
   except Exception as e: 
-    response['error'] = ["Loading Dataset: "+str(e)]
-  #try: 
-  #  dataset_dict_path = open("dataset_dictionary",'rb') 
-  #  dataset_dict = pickle.load(file)
-  #  response['message'].append("Dataset Dictionary loaded.") 
-  #except Exception as e: 
-  #  response['error'].appen("Dataset Dictionary not loaded. "+str(e))
+    response['error'].append("Loading Dataset: "+str(e))
+# till here is fine! 
+
+  try: 
+    gallery_images = get_all_image_links(dataset_dict)
+    response['message'].append("Gallery images loaded loaded.") 
+  except: 
+    response['error'].append("Gallery creation: "+str(e))
   
-  #try: 
-  #  gallery_images = get_all_image_links(dataset_dict)
-  #  response['message'].append("Gallery images loaded loaded.") 
-  #except: 
-  #  response['error'].appen("Gallery creation: "+str(e))
-  
-  #try:
-  #  return render_template('gallery.html', links= {}, response=response)
-  #except Exception as e:
-  #  response['error'].appen("Render Template failed. "+str(e))
+  try:
+    return render_template('gallery.html', links= gallery_images)
+  except Exception as e:
+    response['error'].appen("Render Template failed. "+str(e))
   
   return response
 
