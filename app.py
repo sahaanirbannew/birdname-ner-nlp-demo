@@ -206,7 +206,7 @@ def gall():
   #  return render_template('gallery.html', links= gallery_images)
   #except Exception as e:
   #  response['error'].appen("Render Template failed. "+str(e))
-  response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
+  #response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
   return response
 
 @app.route('/single')
