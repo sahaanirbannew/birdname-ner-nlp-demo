@@ -184,6 +184,9 @@ def gall():
   try:
     dataset_dict_path = open("dataset_dictionary",'rb') 
     dataset_dict = pickle.load(dataset_dict_path)
+    dataset_dict_path.close()
+  except Exception as e: 
+    response['error'] = ["Loading Dataset: "+str(e)]
   #try: 
   #  dataset_dict_path = open("dataset_dictionary",'rb') 
   #  dataset_dict = pickle.load(file)
