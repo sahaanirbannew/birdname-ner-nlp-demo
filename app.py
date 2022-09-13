@@ -14,7 +14,7 @@ from requests.exceptions import HTTPError
 from socket import error as SocketError
 from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
-import math
+
 try:
   from bs4 import BeautifulSoup
 except:
