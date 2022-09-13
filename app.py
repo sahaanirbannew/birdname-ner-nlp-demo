@@ -87,18 +87,7 @@ def return_eBird_list(spelling_corrections):
       eBird_commonNames[eBird] = basic_preprocess(eBird_commonNames[eBird],spelling_corrections)
       eBird_commonNames_list.append(eBird_commonNames[eBird].strip())
   return eBird_commonNames_list
- 
-def get_image_links(): 
-  root = root_path()
-  
-  path = "./templates/images"
-  imglinks_ = os.listdir(path) 
-  imglinks = []
-  for filename in imglinks_: 
-    #imglinks.append(os.path.join(app.instance_path, '/templates/images/', filename))
-    imglinks.append(os.path.join(filename))
-  
-  return imglinks 
+
 
 def basic_preprocess(tweet, spelling_corrections):
   import preprocessor as p
@@ -198,16 +187,16 @@ def gall():
   except Exception as e: 
     response['error'].appen("Dataset Dictionary not loaded. "+str(e))
   
-  try: 
-    gallery_images = get_all_image_links(dataset_dict)
-    response['message'].append("Gallery images loaded loaded.") 
-  except: 
-    response['error'].appen("Gallery creation: "+str(e))
+  #try: 
+  #  gallery_images = get_all_image_links(dataset_dict)
+  #  response['message'].append("Gallery images loaded loaded.") 
+  #except: 
+  #  response['error'].appen("Gallery creation: "+str(e))
   
-  try:
-    return render_template('gallery.html', links= get_all_image_links)
-  except Exception as e:
-    response['error'].appen("Render Template failed. "+str(e))
+  #try:
+  #  return render_template('gallery.html', links= get_all_image_links)
+  #except Exception as e:
+  #  response['error'].appen("Render Template failed. "+str(e))
   
   return response
 
