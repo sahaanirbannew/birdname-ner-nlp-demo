@@ -1,5 +1,5 @@
 <html>
-  {% for link in links: %}
-              <a href="/single?birdname=asian openbill&img={{link}}"><img src="{{url_for('static', filename=link)}}" width="256" alt="bird"></a>
+  {% for bird in links: %}
+              <a href="/single?birdname={{bird}}&img={{links[bird]}}"><img src="{{url_for('static', filename=links[bird])}}" width="100" alt="{{bird}}"></a>
   {% endfor %}
 </html>
