@@ -196,17 +196,17 @@ def gall():
     response['error'].append("Loading Dataset: "+str(e))
 # till here is fine! 
 
-  try: 
-    gallery_images, response = get_all_image_links(dataset_dict,response)
-    response['message'].append("Gallery images loaded loaded.") 
-  except: 
-    response['error'].append("Gallery creation: "+str(e))
+ # try: 
+ #   gallery_images, response = get_all_image_links(dataset_dict,response)
+ #   response['message'].append("Gallery images loaded loaded.") 
+ # except: 
+ #   response['error'].append("Gallery creation: "+str(e))
   
   #try:
   #  return render_template('gallery.html', links= gallery_images)
   #except Exception as e:
   #  response['error'].appen("Render Template failed. "+str(e))
-  
+  response['message'].append(os.path.join(app.instance_path, 'static', 'my_file.txt')
   return response
 
 @app.route('/single')
