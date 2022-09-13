@@ -218,8 +218,10 @@ def gall():
     download_link = "https://pbs.twimg.com/media/FcTKvbdagAQ4sxk.jpg"
     res = requests.get(download_link, stream = True)
     if res.status_code == 200:  
+      response['message'].append(res.status_code) 
       with open(target_file,'wb') as f:
           shutil.copyfileobj(res.raw, f) 
+          response['message'].append("File downloaded") 
       f.close()
   except Exception as e: 
     response['error'].append(str(e)) 
