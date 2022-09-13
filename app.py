@@ -139,7 +139,7 @@ def search_by_commonName_google(commonName):
       speciesCode = eBird_link.split("/")[len(eBird_link.split("/"))-1]
       return speciesCode, eBird_link
 
-def get_all_image_links(complete_dataset_dict):
+def get_all_image_links(complete_dataset_dict, response):
   bird_for_gallery = {} 
   for key in complete_dataset_dict: 
     download_link = "" 
@@ -150,9 +150,13 @@ def get_all_image_links(complete_dataset_dict):
       if count == len(complete_dataset_dict[key]["entries"]):
         break
     if type(download_link) == str:  
-      file_name = download_image(download_link) 
+      response["message"].append(key+" "+download_link)
+      try:
+        file_name = download_image(download_link) 
+      except Exception as e: 
+        response["error"].append(key+" :Download faild"+str(e))
       bird_for_gallery[key] = file_name
-  return bird_for_gallery
+  return bird_for_gallery, response
 
 
 
@@ -190,15 +194,15 @@ def gall():
 # till here is fine! 
 
   try: 
-    gallery_images = get_all_image_links(dataset_dict)
+    gallery_images, response = get_all_image_links(dataset_dict,response)
     response['message'].append("Gallery images loaded loaded.") 
   except: 
     response['error'].append("Gallery creation: "+str(e))
   
-  try:
-    return render_template('gallery.html', links= gallery_images)
-  except Exception as e:
-    response['error'].appen("Render Template failed. "+str(e))
+  #try:
+  #  return render_template('gallery.html', links= gallery_images)
+  #except Exception as e:
+  #  response['error'].appen("Render Template failed. "+str(e))
   
   return response
 
