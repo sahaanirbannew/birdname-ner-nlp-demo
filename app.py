@@ -14,6 +14,7 @@ from requests.exceptions import HTTPError
 from socket import error as SocketError
 from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
+import math
 try:
   from bs4 import BeautifulSoup
 except:
@@ -36,6 +37,19 @@ spelling_corrections["open billed stork"] = "asian openbill"
 spelling_corrections["secretary bird"] = "Secretarybird" 
 spelling_corrections["dollar bird"] = "dollarbird"
 
+def download_image(img_link):
+  try:
+    file_name=img_link.split("/")[len(img_link.split("/"))-1]
+    file_name = url_for('static', filename=file_name)
+    res = requests.get(img_link, stream = True)
+    if res.status_code == 200: 
+      with open(file_name,'wb') as f:
+          shutil.copyfileobj(res.raw, f)  
+      crop_resize_image(file_name)
+      return file_name    
+    else: return "" 
+  except Exception as e:
+    print(str(e), img_link)
 
 def return_html_code(url):
   opener = build_opener(HTTPCookieProcessor())
@@ -139,7 +153,16 @@ def search_by_commonName_google(commonName):
 def get_all_image_links(complete_dataset_dict):
   bird_for_gallery = {} 
   for key in complete_dataset_dict: 
-    bird_for_gallery[key] = complete_dataset_dict[key]["entries"][0]["media_url"]
+    download_link = "" 
+    count = 0 
+    while download_link == "":
+      download_link = complete_dataset_dict[key]["entries"][count]["media_url"] 
+      count += 1
+      if count == len(complete_dataset_dict[key]["entries"]):
+        break
+    if type(download_link) == str:  
+      file_name = download_image(download_link) 
+      bird_for_gallery[key] = file_name
   return bird_for_gallery
 
 
@@ -167,7 +190,7 @@ def hello():        #landing page lol.
 def gall():
   dataset_dict_path = open("dataset_dictionary",'rb') 
   dataset_dict = pickle.load(file)
-  gallery_images = get_all_image_links(complete_dataset_dict)
+  gallery_images = get_all_image_links(dataset_dict)
   try:
     return render_template('gallery.html', links= get_all_image_links)
   except Exception as e:
