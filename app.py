@@ -212,7 +212,7 @@ def gall():
   #  response['error'].appen("Render Template failed. "+str(e))
  
   try:
-    target_file = "/static/temp.jpg"
+    target_file = "./static/temp.jpg"
     download_link = "https://pbs.twimg.com/media/FcTKvbdagAQ4sxk.jpg"
     res = requests.get(download_link, stream = True)
     if res.status_code == 200:  
