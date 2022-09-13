@@ -14,6 +14,7 @@ from requests.exceptions import HTTPError
 from socket import error as SocketError
 from http.cookiejar import CookieJar
 from urllib.request import build_opener, HTTPCookieProcessor
+import shutil
 
 try:
   from bs4 import BeautifulSoup
@@ -212,6 +213,7 @@ def gall():
   #  response['error'].appen("Render Template failed. "+str(e))
  
   try:
+    #target_file = url_for('static', filename="temp.jpg")
     target_file = "./static/temp.jpg"
     download_link = "https://pbs.twimg.com/media/FcTKvbdagAQ4sxk.jpg"
     res = requests.get(download_link, stream = True)
