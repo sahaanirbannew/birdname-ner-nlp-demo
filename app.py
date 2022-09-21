@@ -279,13 +279,11 @@ def send_ner():
     response["messages"].append("user input processed.")
     
     for bird in all_birds:            #no chances of error here. 
-      bird__ = " "+bird+" "
-      if sent_.find(bird__) >-1:
+      if sent_.find(bird) >-1:
         response["bird-wiki"].append(bird)  #if bird is found by rule matching from wikipedia link, it is appended.
     
-    for bird_ in ebird_list:
-      bird__ = " "+bird_+" "
-      if sent_.find(bird__) >-1:
+    for bird_ in ebird_list: 
+      if sent_.find(bird_) >-1:
         response["bird-ebird"].append(bird_) #from the ebird list of birds.
        
     response["bird-ner"] = app_run(sent_,spelling_corrections) #if bird is found by ner, it is appended. 
