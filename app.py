@@ -282,12 +282,12 @@ def send_ner():
     for bird in all_birds:            #no chances of error here. 
       bird = " "+bird+" "
       if sent__.find(bird) >-1:
-        response["bird-wiki"].append(bird)  #if bird is found by rule matching from wikipedia link, it is appended.
+        response["bird-wiki"].append(bird.strip())  #if bird is found by rule matching from wikipedia link, it is appended.
     
     for bird_ in ebird_list: 
       bird_ = " "+bird_+" "
       if sent__.find(bird_) >-1:
-        response["bird-ebird"].append(bird_) #from the ebird list of birds.
+        response["bird-ebird"].append(bird_.strip()) #from the ebird list of birds.
        
     response["bird-ner"] = app_run(sent_,spelling_corrections) #if bird is found by ner, it is appended. 
     #why am i again preprocessing it inside app_run? sent_ is already processed. 
