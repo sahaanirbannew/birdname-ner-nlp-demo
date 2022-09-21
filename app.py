@@ -285,7 +285,7 @@ def send_ner():
     
     for bird_ in ebird_list:
       bird__ = " "+bird_+" "
-      if sent_.find(bird_) >-1:
+      if sent_.find(bird__) >-1:
         response["bird-ebird"].append(bird_) #from the ebird list of birds.
        
     response["bird-ner"] = app_run(sent_,spelling_corrections) #if bird is found by ner, it is appended. 
