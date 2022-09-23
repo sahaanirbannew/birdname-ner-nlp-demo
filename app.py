@@ -37,6 +37,7 @@ spelling_corrections["avedavat"] = "avadavat"
 spelling_corrections["open billed stork"] = "asian openbill" 
 spelling_corrections["secretary bird"] = "Secretarybird" 
 spelling_corrections["dollar bird"] = "dollarbird"
+spelling_corrections["eyes"] = "eye"
 
 def download_image(img_link, response):
   try:
