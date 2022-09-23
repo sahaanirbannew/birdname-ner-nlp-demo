@@ -273,21 +273,23 @@ def send_ner():
     response["error"].append(str(e))    #in case the file is not found.  
   
   try:
-    sent_ = request.args.get('sent') #fetches the text via the argument.  #owl-owlet problem
+    sent_ = request.args.get('sent') #fetches the text via the argument.  
     response["messages"].append("user input recorded.")
       
     sent_ = basic_preprocess(sent_, spelling_corrections)   #preprocessing pipeline.
-    sent_ = " "+sent_+" " #owl-owlet problem. 
+    sent_ = " "+sent_+" " #owl-owlet problem. Pads the input string with one space.
     response["messages"].append("user input processed.")
     
     for bird in all_birds:            #no chances of error here. 
-      bird = " "+bird+" "
-      if sent_.find(bird) >-1:
+      bird = " "+bird+" " 
+      bird_s = " "+bird+"s"            #munia - munias problem
+      if sent_.find(bird) >-1 or sent_.find(bird_s) >-1:
         response["bird-wiki"].append(bird.strip())  #if bird is found by rule matching from wikipedia link, it is appended.
     
     for bird_ in ebird_list: 
       bird_ = " "+bird_+" "
-      if sent_.find(bird_) >-1:
+      bird_s = " "+bird_+"s"            #munia-munias problem
+      if sent_.find(bird_) >-1 or sent_.find(bird_s) >-1:
         response["bird-ebird"].append(bird_.strip()) #from the ebird list of birds.
        
     response["bird-ner"] = app_run(sent_,spelling_corrections) #if bird is found by ner, it is appended. 
