@@ -128,7 +128,7 @@ def app_run(sentence,spelling_corrections):  #fetches bird by custom ner.
   try:
     result = []
     nlp_ner = spacy.load("model-best") 
-    sentence = basic_preprocess(sentence,spelling_corrections)
+    #sentence = basic_preprocess(sentence,spelling_corrections) #already preprocessed. 
     doc = nlp_ner(sentence)
     for ent in doc.ents:
       result.append(str(ent))
@@ -277,19 +277,19 @@ def send_ner():
     sent_ = request.args.get('sent') #fetches the text via the argument.  
     response["messages"].append("user input recorded.")
       
-    sent_ = basic_preprocess(sent_, spelling_corrections)   #preprocessing pipeline.
+    #sent_ = basic_preprocess(sent_, spelling_corrections)   #preprocessing pipeline. #6 Oct: preprocess kore pathacche. This is not required any more.
     sent_ = " "+sent_+" " #owl-owlet problem. Pads the input string with one space.
     response["messages"].append("user input processed.")
     
     for bird in all_birds:            #no chances of error here. 
       bird = " "+bird+" " 
-      bird_s = " "+bird+"s"            #munia - munias problem
+      bird_s = " "+bird+"s"            #munia - munias problem #this is no more required. 
       if sent_.find(bird) >-1 or sent_.find(bird_s) >-1:
         response["bird-wiki"].append(bird.strip())  #if bird is found by rule matching from wikipedia link, it is appended.
     
     for bird_ in ebird_list: 
       bird_ = " "+bird_+" "
-      bird_s = " "+bird_+"s"            #munia-munias problem
+      bird_s = " "+bird_+"s"            #munia-munias problem #this is no more required. 
       if sent_.find(bird_) >-1 or sent_.find(bird_s) >-1:
         response["bird-ebird"].append(bird_.strip()) #from the ebird list of birds.
        
