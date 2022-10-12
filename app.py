@@ -34,6 +34,24 @@ spelling_corrections["secretary bird"] = "Secretarybird"
 spelling_corrections["dollar bird"] = "dollarbird"
 spelling_corrections["eyes"] = "eye"
 
+def basic_preprocess(tweet, spelling_corrections):
+  import preprocessor as p
+  p.set_options(p.OPT.EMOJI, p.OPT.MENTION, p.OPT.URL, p.OPT.SMILEY, p.OPT.NUMBER)
+  tweet = tweet.lower()
+  tweet = tweet.replace("\n"," ")  
+  tweet = tweet.replace("\\n"," ")
+  tweet = tweet.replace("\xf0\x9f\x91\x80", "eye")
+  if tweet[:2] == "b'": tweet = tweet[1:] 
+  tweet = tweet.replace("'","") 
+  tweet = p.clean(tweet)
+  tweet = re.sub(r'[^\w\s]', ' ', tweet)
+  tweet = re.sub(r' x..', '', tweet)
+  tweet = re.sub(r' +', ' ', tweet)  
+  tweet = tweet.strip()
+  for key in spelling_corrections: 
+    if tweet.find(key)>-1: 
+      tweet = tweet.replace(key,spelling_corrections[key])
+  return tweet
 
 def return_html_code(url):
   opener = build_opener(HTTPCookieProcessor())
